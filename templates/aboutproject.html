@@ -1,0 +1,33 @@
+{% include "headcss.html" %}
+{% include "navbar.html" %}
+<h1>✋ Indian Sign Language Detection</h1>
+  <p>This project allows users to detect Indian Sign Language gestures using hand landmarks in real time. The gestures are recognized and converted into text and speech using a combination of machine learning and computer vision techniques.</p>
+
+  <h2>🚀 How It Works</h2>
+   <ul>
+    <li><strong>Step 1:</strong> We capture the hand using webcam video feed.</li>
+    <li><strong>Step 2:</strong> <code>MediaPipe Hands</code> detects 21 hand landmarks from the frame.</li>
+    <li><strong>Step 3:</strong> We extract 9 Euclidean distances between selected landmark pairs to create feature vectors.</li>
+    <li><strong>Step 4:</strong> A pre-trained <code>Bayesian Classifier</code> predicts the corresponding alphabet or word.</li>
+    <li><strong>Step 5:</strong> The output is shown as text and can also be converted to speech.</li>
+  </ul>
+
+  <h2>📐 Landmarks & Feature Extraction</h2>
+  <p>The following landmark pairs are used to calculate Euclidean distances:</p>
+  <code>(20,0), (16,0), (12,0), (8,0), (4,0), (20,16), (16,12), (12,8), (8,4)</code>
+  <br>
+  <br><b></b>
+  <h2>🧠 Algorithms & Tools Used</h2>
+  <ul>
+    <li><strong>MediaPipe Hands:</strong> For real-time hand landmark detection</li>
+    <li><strong>Euclidean Distance:</strong> To convert landmarks into features</li>
+    <li><strong>Bayesian Classifier:</strong> For gesture classification</li>
+    <li><strong>Flask:</strong> For building the web application</li>
+    <li><strong>SpeechRecognition:</strong> For converting speech to text (in another module)</li>
+  </ul>
+<center>
+  <img src="/static/image.png" alt="">
+  <br>
+  <br>
+  <img height="400px" width="800px" src="/static/hand_landmarks.png" alt=""></center>
+{% include "footer.html" %}

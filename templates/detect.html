@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign Language Recognition System</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="Indian Sign Language Recognition" name="description">
+
+  <!-- Favicon -->
+  <link href="/static/logo.png" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Libraries -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Styles -->
+  <style>
+    body {
+      font-family: 'Heebo', sans-serif;
+    }
+
+    .hero-header {
+      background: #000;
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .hero-header p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .btn-start {
+      background-color: #28a745;
+      color: white;
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+    }
+
+    .feature-box {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+      background-color: #000;
+      color: #fff;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    /* Detect section */
+    #detect {
+      background-color: #121212;
+      color: #ffffff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    #detect button {
+      padding: 12px 24px;
+      font-size: 18px;
+      background-color: #1f1f1f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #detect button:hover {
+      background-color: #333333;
+    }
+
+    #detect video {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 600px;
+      height: 340px;
+      border-radius: 12px;
+      background-color: #000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <img src="/static/logo.png" height="70px" alt="hello">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+        
+          <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="/team">Team</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="detect">
+    <div class="container">
+      <h1>🎙️ Speak and Watch</h1>
+      <p>Click the button, say something, and watch the related sign !</p>
+      <button onclick="startSpeech()">Start Recording</button>
+      <p id="text-output"></p>
+      <video id="video-player" controls autoplay muted></video>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Project Features</h2>
+        <p>Explore what our system can do</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-hand-paper fa-2x mb-3"></i>
+            <h5>Real-Time Detection</h5>
+            <p>Recognizes hand signs instantly using webcam feed.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-volume-up fa-2x mb-3"></i>
+            <h5>Text & Speech Output</h5>
+            <p>Converts recognized text and audio into sign language</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-brain fa-2x mb-3"></i>
+            <h5>AI Powered</h5>
+            <p></p>
+          </div>
+        </div>
+        
+    </div>
+  </section>
+
+  
+
+ 
+
+  
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Group 16 . All rights reserved.</p>
+      <p><a href="https://github.com/your-repo-link" class="text-white"></a></p>
+    </div>
+  </footer>
+
+  <!-- JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Speech Detection Script -->
+  <script>
+    function startSpeech() {
+      document.getElementById("text-output").textContent = "Listening...";
+      fetch("/detectspeech", { method: "POST" })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("text-output").textContent = "You said: " + data.text;
+          const video = document.getElementById("video-player");
+          video.src = data.video;
+          video.load();
+          video.play();
+        })
+        .catch(err => {
+          document.getElementById("text-output").textContent = "Error: " + err;
+        });
+    }
+  </script>
+
+</body>
+
+</html>

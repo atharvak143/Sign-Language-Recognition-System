@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+ {% include "headcss.html" %}
+{% include "navbar.html" %}
+{% include "herosection.html" %}
+
+  <!-- Features Section -->
+  <section id="features" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Project Features</h2>
+        <p>Explore what our system can do</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-hand-paper fa-2x mb-3"></i>
+            <h5>Real-Time Detection</h5>
+            <p>Recognizes hand signs instantly using webcam feed.</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-volume-up fa-2x mb-3"></i>
+            <h5>Text & Speech Output</h5>
+            <p>Converts recognized text and audio into sign language</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-brain fa-2x mb-3"></i>
+            <h5>AI Powered</h5>
+            <p><p>Converts recognized text and audio into sign language</p></p>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-hand-paper fa-2x mb-3"></i>
+            <h5>Real-Time Detection</h5>
+            <p>Recognizes hand signs instantly using webcam feed.</p>
+          
+        </div>
+        
+        
+    </div>
+  </section>
+
+  
+
+
+  
+
+  
+
+ {% include "footer.html" %}
+
+  <!-- JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Speech Detection Script -->
+  <script>
+    function startSpeech() {
+      document.getElementById("text-output").textContent = "Listening...";
+      fetch("/speech-to-text", { method: "POST" })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("text-output").textContent = "You said: " + data.text;
+          const video = document.getElementById("video-player");
+          video.src = data.video;
+          video.load();
+          video.play();
+        })
+        .catch(err => {
+          document.getElementById("text-output").textContent = "Error: " + err;
+        });
+    }
+  </script>
+
+</body>
+
+</html>
